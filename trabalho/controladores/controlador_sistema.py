@@ -1,5 +1,6 @@
 from trabalho.entidade.filial import Filial
 from trabalho.entidade.gerente import Gerente
+from trabalho.controladores.controlador_filial import ControladorFilial
 from trabalho.telas.tela_sistema import TelaSistema
 from trabalho.exception.repeticao import Repeticao
 from trabalho.exception.naoExistencia import NaoExistencia
@@ -27,7 +28,8 @@ class ControladorSistema:
             # Checagem de repetição
             if self.checagem_repeticao(dados_nova_filial['cep'], dados_nova_filial['cidade']):
                 break
-        self.__lista_filiais.append(Filial(dados_nova_filial['cep'], dados_nova_filial['cidade'], dados_nova_filial['gerente']))
+        self.__lista_filiais.append(Filial(dados_nova_filial['cep'], dados_nova_filial['cidade'],
+                                           dados_nova_filial['gerente']))
         print('Filial cadastrada com sucesso.')
 
     def excluir_filial(self):
@@ -37,12 +39,18 @@ class ControladorSistema:
         self.__tela_sistema.mostra_mensagem('Filial excluída com sucesso.')
 
     def modificar_filial(self):
-        pass
+        self.__tela_sistema.mostra_mensagem('\n=== Modificação de filiais ===\n'
+                                            + 'Informe o CEP da filial que deseja consultar.')
+        filial = self.busca_por_cep()
+        ControladorFilial(self, filial)
 
     def listar_por_atv(self):
-        self.__tela_sistema.mostra_mensagem("=== Listagem de filiais ===\n")
-        for _ in self.__lista_filiais:
-            self.__tela_sistema.listagem(_.cep, _.cidade)
+        if len(self.__lista_filiais) > 0:
+            self.__tela_sistema.mostra_mensagem("\n=== Listagem de filiais ===\n")
+            for _ in self.__lista_filiais:
+                self.__tela_sistema.listagem(_.cep, _.cidade)
+        else:
+            self.__tela_sistema.mostra_mensagem('Lista vazia.\n')
 
     # Método de checagem de repetição
     def checagem_repeticao(self, cep, cidade):
@@ -69,4 +77,3 @@ class ControladorSistema:
 
     def sair(self):
         exit(0)
-

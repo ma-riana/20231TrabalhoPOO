@@ -15,7 +15,7 @@ class TelaSistema(Tela):
               + "2) Excluir uma filial\n"
               + "3) Modificar uma filial\n"
               + "4) Listar filiais por atividade\n"
-              + "0) Sair")
+              + "0) Sair\n")
         opcao = super().le_int_validos([0, 1, 2, 3, 4], "Escolha uma opção: ")
         return opcao
 

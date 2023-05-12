@@ -10,14 +10,17 @@ class TelaGerente(TelaFuncionario):
         super().mostra_mensagem(msg)
 
     def mostra_opcoes(self):
-        opcao = input("TELA DE MODIFICAÇÃO: GERENTE"
-                      + "O que deseja fazer?"
-                      + "1) Listar informações do gerente atual"
-                        "2) Listar contratos realizados"
-                      + "3) Modificar informações do gerente atual"
-                      + "4) Demitir gerente"
-                        "6) Mudar cargo do gerente"
-                      + "7) Transferir gerente")
+        print("TELA DE MODIFICAÇÃO: GERENTE\n"
+                + "1) Modificar informações do gerente atual\n"
+                + "2) Demitir gerente\n"
+                + "3) Transferir gerente\n"
+                + "4) Mudar cargo do gerente\n"
+                + "6) Listagem de contratos realizados\n"
+                + "7) Acessar contrato\n"
+                + "0) Retornar\n")
+        opcao = super().le_int_validos([1, 2, 3, 4, 5, 6, 7, 0], "Escolha uma opçao: ")
+        return opcao
+
 
     def menu_modificacao(self):
         return super().menu_modificacao()

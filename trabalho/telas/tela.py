@@ -12,7 +12,6 @@ class Tela(ABC):
     def mostra_opcoes(self):
         pass
 
-    @abstractmethod
     def mostra_mensagem(self, msg):
         print(msg)
 
