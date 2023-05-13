@@ -20,9 +20,7 @@ class TelaFuncionario(Tela):
 
     def pega_dados_cadastro(self):
         print("Regras: 1. É necessário ser maior de 18 anos\n"
-              + "        2. Não é permitido contratar funcionários já demitidos\n"
-              + "        3. Formatação CPF ex: 13255870950 (11 ints)\n"
-              + "        4. Formatação data ex: 01012000\n")
+              + "        2. Não é permitido contratar funcionários já demitidos\n")
         nome = input("Nome: ")
         cpf = self.le_cpf("CPF: ")
         data_nasc = self.le_data("Data de nascimento: ")

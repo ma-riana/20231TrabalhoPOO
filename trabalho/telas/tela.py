@@ -23,6 +23,7 @@ class Tela(ABC):
 
     def le_cpf(self, msg):
         while True:
+            print('Formatação CPF válido: 13255870950 (11 ints)')
             cpf = input(msg)
             try:
                 if len(cpf) == 11:
@@ -38,6 +39,7 @@ class Tela(ABC):
 
     def le_cep(self, msg):
         while True:
+            print('Formatação CEP válido: 88000001 (8 ints)')
             cep = input(msg)
             try:
                 if len(cep) == 8:
@@ -51,6 +53,7 @@ class Tela(ABC):
 
     def le_data(self, msg):
         while True:
+            print('Formatação data válido: 11012000 (8 ints)')
             data = input(msg)
             data_int = float(data)
             try:
