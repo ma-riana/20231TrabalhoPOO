@@ -1,9 +1,12 @@
 from trabalho.entidade.funcionario import Funcionario
+from datetime import date
+
 
 class Gerente(Funcionario):
-    def __init__(self, nome: str, cpf: str, data_nasc: str):
-        super().__init__(nome, cpf, data_nasc)
+    def __init__(self, nome: str, cpf: str, data_nasc: date, atividade=False):
+        super().__init__(nome, cpf, data_nasc, atividade)
         self.__contratos = []
+        self.__contrato = None
 
     @property
     def contratos(self):

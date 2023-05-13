@@ -1,12 +1,14 @@
 from trabalho.entidade.filial import Filial
 from trabalho.entidade.funcionario import Funcionario
+from datetime import date
+
 
 class Transferencia:
 
     def __init__(self, funcionario: Funcionario,
                  filial_antiga: Filial,
                  filial_nova: Filial,
-                 data: str):
+                 data: date):
         self.__funcionario = funcionario
         self.__filial_antiga = filial_antiga
         self.__filial_nova = filial_nova
@@ -44,8 +46,8 @@ class Transferencia:
         return self.__data
 
     @data.setter
-    def data(self, data: str):
-        if isinstance(data, str):
+    def data(self, data: date):
+        if isinstance(data, date):
             self.__data = data
 
 

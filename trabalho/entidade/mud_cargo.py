@@ -1,17 +1,18 @@
 from trabalho.entidade.cargo import Cargo
 from trabalho.entidade.funcionario import Funcionario
+from datetime import date
+
 
 class MudancaCargo:
 
     def __init__(self, cargo_novo: Cargo,
                  cargo_antigo: Cargo,
                  funcionario: Funcionario,
-                 data: str):
+                 data: date):
         self.__cargo_novo = cargo_novo
         self.__cargo_antigo = cargo_antigo
         self.__funcionario = funcionario
         self.__data = data
-
 
     @property
     def cargo_novo(self):
@@ -45,12 +46,6 @@ class MudancaCargo:
             self.__funcionario = funcionario
 
     @data.setter
-    def data(self, data: str):
+    def data(self, data: date):
         if isinstance(data, str):
             self.__data = data
-
-
-
-
-
-

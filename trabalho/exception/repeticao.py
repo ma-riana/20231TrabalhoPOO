@@ -1,3 +1,8 @@
 class Repeticao(Exception):
     def __init__(self, obj_repetido, valor_repetido):
-        super().__init__(f"Repetição não permetida em '{obj_repetido}': {valor_repetido}. Cadastre sem repetições.")
+        super().__init__()
+        self.__obj_repetido = obj_repetido
+        self.__valor_repetido = valor_repetido
+
+    def msg(self):
+        print(f"Repetição não permitida em '{self.__obj_repetido}': {self.__valor_repetido}. Cadastre sem repetições.")

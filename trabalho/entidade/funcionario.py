@@ -1,9 +1,11 @@
-class Funcionario():
-    def __init__(self, nome: str, cpf: str, data_nasc: str):
+from datetime import date
+
+class Funcionario:
+    def __init__(self, nome: str, cpf: str, data_nasc: date, atividade=False):
         self.__nome = nome
         self.__cpf = cpf
         self.__data_nasc = data_nasc
-        self.__atividade = False
+        self.__atividade = atividade
 
     @property
     def nome(self):
@@ -30,7 +32,7 @@ class Funcionario():
         self.__cpf = cpf
     
     @data_nasc.setter
-    def data_nasc(self, data_nasc: str):
+    def data_nasc(self, data_nasc: date):
         self.__data_nasc = data_nasc
     
     @atividade.setter

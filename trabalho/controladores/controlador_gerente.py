@@ -1,44 +1,30 @@
 from trabalho.telas.tela_gerente import TelaGerente
 from trabalho.entidade.gerente import Gerente
+from trabalho.entidade.cargo import Cargo
 from trabalho.exception.repeticao import Repeticao
-
+from datetime import date
 
 class ControladorGerente:
 
-    def __init__(self, controlador_filial):
-        self.__controlador_filial = controlador_filial
+    def __init__(self):
         self.__tela_gerente = TelaGerente()
-        self.__gerentes = [Gerente("Lucas", "999", "01012000")]
-
-    def inicializa_sistema(self):
-        lista_opcoes = {1: self.modificar_dados, 0: self.retornar}
-
-        while True:
-            opcao_escolhida = self.__tela_gerente.mostra_opcoes()
-            funcao_escolhida = lista_opcoes[opcao_escolhida]
-            funcao_escolhida()
-
-    def modificar_dados(self):
-        self.__tela_gerente.mostra_mensagem('=== Modificação de dados ===')
-        opcao = self.__tela_gerente.menu_modificacao()
-        if opcao == 1:
-            pass
-        if opcao == 2:
-            pass
-        if opcao == 3:
-            pass
-        if opcao == 0:
-            return
+        self.__gerentes = [Gerente("Empresa", "999", date(1999, 6, 7))]
+        self.__gerentes_cargos = [Cargo('Gerente', 10000)]
 
     def add_gerente(self):
-        self.__tela_gerente.mostra_mensagem("=== Cadastro de gerente ===")
+        self.__tela_gerente.mostra_mensagem("\n=== Cadastro de gerente ===")
+        # Realizando a checagem de repetição de CPF
         while True:
             novo_gerente = self.__tela_gerente.pega_dados_cadastro()
             if self.checagem_repeticao(novo_gerente['CPF']):
                 break
             self.__tela_gerente.mostra_mensagem('CPF já cadastrado.')
         self.__gerentes.append(Gerente(novo_gerente['nome'], novo_gerente['CPF'], novo_gerente['data_nasc']))
-        return self.__gerentes[-1]
+
+        # Infomações constantes para todos os gerentes
+        infos_gerencia = {'funcionario': self.__gerentes[-1], 'empregador': self.__gerentes[0],
+                          'cargo': self.__gerentes_cargos[0], 'data_inicio': novo_gerente['data_inicio']}
+        return infos_gerencia
 
     def checagem_repeticao(self, cpf):
         while True:

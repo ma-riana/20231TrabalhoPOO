@@ -1,7 +1,7 @@
 from trabalho.entidade.gerente import Gerente
 
 class Filial:
-    def __init__(self, cep: int, cidade: str, gerente: Gerente):
+    def __init__(self, cep: str, cidade: str, gerente: Gerente):
         self.__cep = cep
         self.__cidade = cidade
         self.__gerente = gerente
@@ -26,18 +26,15 @@ class Filial:
 
     @cep.setter
     def cep(self, cep):
-        if isinstance(cep, int):
-            self.__cep = cep
+        self.__cep = cep
 
     @cidade.setter
     def cidade(self, cidade):
-        if isinstance(cidade, str):
-            self.__cidade = cidade
+        self.__cidade = cidade
 
     @gerente.setter
     def gerente(self, gerente):
-        if isinstance(gerente, Gerente):
-            self.__gerente = gerente
+        self.__gerente = gerente
 
     @funcionarios.setter
     def funcionarios(self, funcionarios: list):

@@ -20,14 +20,12 @@ class TelaFilial(Tela):
 
     def menu_modificacao(self):
         print("O que deseja modificar?\n"
-              + "(Para demais modificações, consulte as outras opções do menu.)"
+              + "(Para demais modificações, consulte as outras opções do menu.)\n"
               + "1) CEP\n"
               + "2) Cidade\n"
               + "0) Retornar\n")
         opcao = super().le_int_validos([1, 2, 0], "Escolha uma opçao: ")
         return opcao
 
-    def pega_cep(self):
-        cep = self.le_int_positivo("Informe o CEP: ")
-        return cep
-
+    def listagem(self, nome, cpf, data_nasc):
+        print(f"Nome: {nome}\nCPF: {cpf}\nData_nasc: {data_nasc}\n")
