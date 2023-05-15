@@ -1,7 +1,7 @@
-from trabalho.telas.tela import Tela
+from trabalho.telas.abstract_tela import AbstractTela
 
 
-class TelaSistema(Tela):
+class TelaSistema(AbstractTela):
 
     def __init__(self):
         super().__init__()

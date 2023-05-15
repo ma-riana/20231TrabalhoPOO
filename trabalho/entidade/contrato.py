@@ -1,7 +1,6 @@
 from trabalho.entidade.funcionario import Funcionario
 from trabalho.entidade.gerente import Gerente
 from trabalho.entidade.filial import Filial
-
 from trabalho.entidade.cargo import Cargo
 from datetime import date
 
@@ -16,8 +15,6 @@ class Contrato:
         self.__empregado = empregado
         self.__filial = filial        
         self.__empregador = empregador
-        self.__mud_cargos = []
-        self.__transferencias = []
 
     @property
     def id(self):
@@ -46,14 +43,6 @@ class Contrato:
     @property
     def empregador(self):
         return self.__empregador
-
-    @property
-    def mud_cargos(self):
-        return self.__mud_cargos
-    
-    @property
-    def transferencias(self):
-        return self.__transferencias
     
     @data_inicio.setter
     def data_inicio(self, data_inicio: date):
@@ -78,9 +67,3 @@ class Contrato:
     @empregador.setter
     def empregador(self, empregador: Gerente):
         self.__empregador = empregador
-
-    def rem_transferencia(self, transferencia):
-        self.__transferencias.remove(transferencia)
-
-    def rem_mud_cargo(self, mud_cargo):
-        self.__mud_cargos.remove(mud_cargo)

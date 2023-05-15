@@ -1,22 +1,22 @@
 from trabalho.entidade.filial import Filial
-from trabalho.entidade.gerente import Gerente
 from trabalho.controladores.controlador_filial import ControladorFilial
 from trabalho.controladores.controlador_gerente import ControladorGerente
 from trabalho.controladores.controlador_fun_comum import ControladorFunComum
 from trabalho.controladores.controlador_contrato import ControladorContrato
+from trabalho.controladores.controlador_cargo import ControladorCargo
 from trabalho.telas.tela_sistema import TelaSistema
 from trabalho.exception.repeticao import Repeticao
 from trabalho.exception.naoExistencia import NaoExistencia
-from datetime import date
 
 
 class ControladorSistema:
 
     def __init__(self):
         self.__tela_sistema = TelaSistema()
-        self.__controlador_gerente = ControladorGerente()
-        self.__controlador_contrato = ControladorContrato()
-        self.__controlador_fun_comum = ControladorFunComum()
+        self.__controlador_cargo = ControladorCargo(self)
+        self.__controlador_gerente = ControladorGerente(self)
+        self.__controlador_fun_comum = ControladorFunComum(self)
+        self.__controlador_contrato = ControladorContrato(self)
         self.__lista_filiais = []
 
     @property
@@ -31,9 +31,13 @@ class ControladorSistema:
     def controlador_fun_comum(self):
         return self.__controlador_fun_comum
 
+    @property
+    def controlador_cargo(self):
+        return self.__controlador_cargo
+
     def inicializa_sistema(self):
         lista_opcoes = {1: self.adicionar_filial, 2: self.excluir_filial,
-                        3: self.modificar_filial, 4: self.listar_por_atv,
+                        3: self.modificar_filial, 4: self.listar,
                         0: self.sair}
 
         while True:
@@ -47,7 +51,7 @@ class ControladorSistema:
             dados_nova_filial = self.__tela_sistema.pega_dados_cadastro()
             # Checagem de repetição
             if self.checagem_repeticao_cep(dados_nova_filial['cep']):
-                if self.checagem_repeticao_cep(dados_nova_filial['cep']):
+                if self.checagem_repeticao_cidade(dados_nova_filial['cidade']):
                     break
 
         infos_gerencia = self.__controlador_gerente.add_gerente()
@@ -63,16 +67,16 @@ class ControladorSistema:
 
     def excluir_filial(self):
         self.__tela_sistema.mostra_mensagem('\n=== EXCLUSÃO DE FILIAIS ===\nRealize a busca.')
-        filial = self.busca_por_cep()
+        filial = self.busca_por_cep("Digite o CEP da filial a ser excluída: ")
         self.__lista_filiais.remove(filial)
         self.__tela_sistema.mostra_mensagem('Filial excluída com sucesso.')
 
     def modificar_filial(self):
         self.__tela_sistema.mostra_mensagem('\n=== Modificação filial por CEP ===')
         filial = self.busca_por_cep("Digite o CEP: ")
-        ControladorFilial(self, self.__controlador_contrato, filial).inicializa_sistema()
+        ControladorFilial(self, filial).inicializa_sistema()
 
-    def listar_por_atv(self):
+    def listar(self):
         if len(self.__lista_filiais) > 0:
             self.__tela_sistema.mostra_mensagem("\n=== Listagem de filiais ===\n")
             for _ in self.__lista_filiais:

@@ -7,18 +7,18 @@ from trabalho.exception.filial_errada import FilialErrada
 
 class ControladorFunComumEsp:
 
-    def __init__(self, controlador_filial, controlador_contrato, controlador_sistema, funcionarios):
+    def __init__(self, controlador_filial, funcionarios):
         self.__controlador_filial = controlador_filial
-        self.__controlador_contrato = controlador_contrato
-        self.__controlador_sistema = controlador_sistema
+        self.__controlador_sistema = self.__controlador_filial.controlador_sistema
+        self.__controlador_contrato = self.__controlador_sistema.controlador_contrato
+        self.__controlador_cargo = self.__controlador_sistema.controlador_cargo
         self.__tela_fun_comum = TelaFuncomum()
         self.__funcionarios = funcionarios
 
     def inicializa_sistema(self):
         lista_opcoes = {1: self.modificar_dados, 2: self.add_fun_comum,
-                        3: self.demitir, 4: self.transferir, 5: self.mudar_cargo,
-                        6: self.acessar_contrato, 7: self.listar_todos,
-                        0: self.retornar}
+                        3: self.acessar_contrato, 4: self.listar_todos,
+                        5: self.demitir, 0: self.retornar}
 
         while True:
             opcao_escolhida = self.__tela_fun_comum.mostra_opcoes()
@@ -26,7 +26,7 @@ class ControladorFunComumEsp:
             funcao_escolhida()
 
     def modificar_dados(self):
-        funcionario = self.busca_fun_por_cpf()
+        funcionario = self.busca_fun_por_cpf("Digite o CPF do funcionário para modificação: ")
         opcao = self.__tela_fun_comum.menu_modificacao()
         if opcao == 1:
             novo_nome = self.__tela_fun_comum.pega_input("Digite o novo nome:")
@@ -59,25 +59,18 @@ class ControladorFunComumEsp:
         data_inicio = novo_fun_comum['data_inicio']
         empregador = self.__controlador_filial.filial.gerente
         filial = self.__controlador_filial.filial
-        cargos = self.__controlador_sistema.controlador_fun_comum.fun_comuns_cargos
-        cargo_index = self.__tela_fun_comum.pega_cargo(cargos)
-        cargo = cargos[cargo_index - 1]
+        cargo = self.__controlador_cargo.seleciona_cargo()
 
         dados_contrato = {'data_inicio': data_inicio, 'cargo': cargo, 'empregado': novo_funcionario,
                           'filial': filial, 'empregador': empregador}
         self.__controlador_contrato.incluir_contrato(dados_contrato)
 
     def demitir(self):
-        pass
-
-    def transferir(self):
-        pass
-
-    def mudar_cargo(self):
-        pass
+        fun_comum = self.busca_fun_por_cpf("Digite o CPF do funcionário para a demissão: ")
+        self.__controlador_contrato.demitir(fun_comum)
 
     def acessar_contrato(self):
-        fun_comum = self.busca_fun_por_cpf()
+        fun_comum = self.busca_fun_por_cpf("Digite o CPF do funcionário para acessar o contrato: ")
         self.__controlador_contrato.inicializa_sistema(self, fun_comum)
 
     def listar_todos(self):
@@ -89,10 +82,9 @@ class ControladorFunComumEsp:
         else:
             self.__tela_fun_comum.mostra_mensagem('Lista vazia.')
 
-    def busca_fun_por_cpf(self):
-        self.__tela_fun_comum.mostra_mensagem("\nAntes de prosseguir,")
+    def busca_fun_por_cpf(self, msg):
         while True:
-            cpf_buscado = self.__tela_fun_comum.le_cpf("Informe o CPF: ")
+            cpf_buscado = self.__tela_fun_comum.le_cpf(msg)
             lista_fun_geral = self.__controlador_sistema.controlador_fun_comum.fun_comuns
             try:
                 for funcionario in self.__funcionarios:

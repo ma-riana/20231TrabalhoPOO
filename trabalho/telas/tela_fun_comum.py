@@ -10,13 +10,11 @@ class TelaFuncomum(TelaFuncionario):
         print("\nTELA DE MODIFICAÇÃO: FUNCIONARIO COMUM\n"
               + "1) Modificar informações\n"
                 "2) Cadastrar novo funcionario comum\n"
-              + "3) Demitir\n"
-              + "4) Transferir \n"
-              + "5) Mudar cargo \n"
-              + "6) Acessar contrato\n"
-              + "7) Listar todos\n"
+              + "3) Acessar contrato\n"
+              + "4) Listar todos\n"
+              + "5) Demitir\n"
               + "0) Retornar\n")
-        opcao = super().le_int_validos([1, 2, 3, 4, 5, 6, 7, 0], "Escolha uma opçao: ")
+        opcao = super().le_int_validos([1, 2, 3, 4, 5, 0], "Escolha uma opçao: ")
         return opcao
 
     def pega_cpf(self, msg):
@@ -25,12 +23,3 @@ class TelaFuncomum(TelaFuncionario):
     def listagem(self, nome, cpf, data_nasc):
         print(f"Nome: {nome}\nCPF: {cpf}\nData_nasc: {data_nasc}\n")
 
-    def pega_cargo(self, lista_cargos):
-        print('\n=== Cargos disponíveis ===')
-        index = 1
-        for cargo in lista_cargos:
-            print(f'{index}. {cargo.titulo}')
-            index += 1
-        print('\n')
-        opcao = self.le_intervalo(1, index, "Escolha uma opção: ")
-        return opcao

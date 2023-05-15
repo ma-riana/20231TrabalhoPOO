@@ -3,17 +3,16 @@ from trabalho.telas.tela_gerente import TelaGerente
 
 class ControladorGerenteEsp:
 
-    def __init__(self, controlador_filial, controlador_contrato, controlador_sistema, gerente):
+    def __init__(self, controlador_filial, gerente):
         self.__controlador_filial = controlador_filial
-        self.__controlador_contrato = controlador_contrato
-        self.__controlador_sistema = controlador_sistema
+        self.__controlador_sistema = self.__controlador_filial.controlador_sistema
+        self.__controlador_contrato = self.__controlador_sistema.controlador_contrato
         self.__tela_gerente = TelaGerente()
         self.__gerente = gerente
 
     def inicializa_sistema(self):
         lista_opcoes = {1: self.modificar_dados, 2: self.demitir,
-                        3: self.transferir, 4: self.mudar_cargo,
-                        5: self.listar_contratos, 6: self.acessar_contrato,
+                        3: self.listar_contratos, 4: self.acessar_contrato,
                         0: self.retornar}
 
         while True:
@@ -37,18 +36,26 @@ class ControladorGerenteEsp:
             return
 
     def demitir(self):
-        pass
+        self.__tela_gerente.mostra_mensagem("Cadastre um novo gerente antes de demitir o anterior")
+        self.subs_cargo()
+        self.__controlador_contrato.demitir(self.__gerente)
+        self.__tela_gerente.mostra_mensagem('Gerente demitido com sucesso.')
 
-    def transferir(self):
-        pass
-
-    def mudar_cargo(self):
-        pass
+    def subs_cargo(self):
+        infos_gerencia = self.__controlador_sistema.controlador_gerente.add_gerente()
+        filial = self.__controlador_contrato.pega_contrato_por_cpf_auto(self.__gerente.cpf).filial
+        dados_contrato = {'data_inicio': infos_gerencia['data_inicio'], 'cargo': infos_gerencia['cargo'],
+                          'empregado': infos_gerencia['funcionario'], 'filial': filial,
+                          'empregador': infos_gerencia['empregador']}
+        filial.gerente = infos_gerencia['funcionario']
+        self.__controlador_contrato.incluir_contrato(dados_contrato)
 
     def listar_contratos(self):
         if len(self.__gerente.contratos) > 0:
             for contrato in self.__gerente.contratos:
                 self.__controlador_contrato.tela_contrato.listar_contrato(contrato)
+        else:
+            self.__tela_gerente.mostra_mensagem('Lista vazia.')
 
     def acessar_contrato(self):
         self.__controlador_contrato.inicializa_sistema(self, self.__gerente)

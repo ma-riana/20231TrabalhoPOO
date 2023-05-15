@@ -1,7 +1,12 @@
 class Cargo:
-    def __init__(self, titulo, salario):
+    def __init__(self, id, titulo, salario):
+        self.__id = id
         self.__titulo = titulo
         self.__salario = salario
+
+    @property
+    def id(self):
+        return self.__id
 
     @property
     def titulo(self):
@@ -10,6 +15,10 @@ class Cargo:
     @property
     def salario(self):
         return self.__salario
+
+    @id.setter
+    def id(self, id: int):
+            self.__id = id
 
     @titulo.setter
     def titulo(self, titulo: str):

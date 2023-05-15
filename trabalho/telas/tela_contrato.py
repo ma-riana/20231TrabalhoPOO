@@ -1,10 +1,9 @@
-from trabalho.telas.tela import Tela
+from trabalho.telas.abstract_tela import AbstractTela
 from trabalho.entidade.contrato import Contrato
-from trabalho.entidade.transferencia import Transferencia
-from trabalho.entidade.mud_cargo import MudancaCargo
 
 
-class TelaContrato(Tela):
+
+class TelaContrato(AbstractTela):
 
     def __init__(self):
         pass
@@ -12,9 +11,20 @@ class TelaContrato(Tela):
     def mostra_opcoes(self):
         print('\nTELA DE MODIFICAÇÃO: CONTRATO\n'
               + '1) Mostrar contrato\n'
-              + '2) Listar ocorrencias\n'
+              + '2) Excluir contrato (deixar funcionário inativo)\n'
+              + '3) Modificar informações\n'
               + '0) Retornar\n')
-        opcao = self.le_int_validos([0, 1, 2], 'Escolha uma opção: ')
+        opcao = self.le_int_validos([0, 1, 2, 3], 'Escolha uma opção: ')
+        return opcao
+
+    def menu_modificacao(self):
+        print("O que deseja modificar?\n"
+              + "1) Data de emissão\n"
+              + "1) Data de finalização\n"
+              + "2) Cargo\n"
+              + "3) Filial\n"
+              + "0) Retornar\n")
+        opcao = super().le_int_validos([1, 2, 3, 4, 0], "Escolha uma opçao: ")
         return opcao
 
     def listar_contrato(self, contrato: Contrato):
@@ -30,14 +40,14 @@ class TelaContrato(Tela):
         Data de termino: {contrato.data_final}
         ''')
 
-    def listar_transferencia(self, transf: Transferencia):
-        print(f'\n=== Transferência ==='
-              + f'Filial antiga: {transf.filial_antiga.cep}\n'
-              + f'Filial atual: {transf.filial_nova.cep}\n'
-              + f'Data: {transf.data}\n')
+    def pega_data(self, msg):
+        data = self.le_data(msg)
+        return data
 
-    def listar_mud_cargo(self, mud_cargo: MudancaCargo):
-        print(f'\n=== Mudança de cargo ==='
-              + f'Cargo antiga: {mud_cargo.cargo_antigo}\n'
-              + f'Cargo atual: {mud_cargo.cargo_novo}\n'
-              + f'Data: {mud_cargo.data}\n')
+    def pega_filial(self, msg):
+        filial = self.le_cep(msg)
+        return filial
+
+    def pega_cargo(self, msg):
+        nome_cargo = input('msg')
+        return nome_cargo

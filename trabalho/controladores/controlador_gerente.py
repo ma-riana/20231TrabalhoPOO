@@ -6,10 +6,11 @@ from datetime import date
 
 class ControladorGerente:
 
-    def __init__(self):
+    def __init__(self, controlador_sistema):
+        self.__controlador_sistema = controlador_sistema
+        self.__controlador_cargo = self.__controlador_sistema.controlador_cargo
         self.__tela_gerente = TelaGerente()
         self.__gerentes = [Gerente("Empresa", "999", date(1999, 6, 7))]
-        self.__gerentes_cargos = [Cargo('Gerente', 10000)]
 
     def add_gerente(self):
         self.__tela_gerente.mostra_mensagem("\n=== Cadastro de gerente ===")
@@ -22,8 +23,9 @@ class ControladorGerente:
         self.__gerentes.append(Gerente(novo_gerente['nome'], novo_gerente['CPF'], novo_gerente['data_nasc']))
 
         # Infomações constantes para todos os gerentes
+        cargo_gerente = self.__controlador_cargo.cargos[0]
         infos_gerencia = {'funcionario': self.__gerentes[-1], 'empregador': self.__gerentes[0],
-                          'cargo': self.__gerentes_cargos[0], 'data_inicio': novo_gerente['data_inicio']}
+                          'cargo': cargo_gerente, 'data_inicio': novo_gerente['data_inicio']}
         return infos_gerencia
 
     def checagem_repeticao(self, cpf):

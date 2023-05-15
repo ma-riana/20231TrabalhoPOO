@@ -4,13 +4,12 @@ from datetime import date
 from trabalho.exception.opcao_invalida import OpcaoInvalida
 
 
-class Tela(ABC):
+class AbstractTela(ABC):
 
     @abstractmethod
     def __init__(self):
         pass
 
-    @abstractmethod
     def mostra_opcoes(self):
         pass
 
